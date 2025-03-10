@@ -1,0 +1,57 @@
+
+workflows:
+  react-native-ios:
+    name: Smart Ring Health iOS
+    instance_type: mac_mini_m1
+    environment:
+      xcode: latest
+      node: latest
+      ios_signing:
+        provisioning_profiles:
+          - production_profile
+        certificates:
+          - production_certificate
+      vars:
+        APP_ID: "app.lovable.smartring.health"
+        BUNDLE_ID: "app.lovable.smartring.health"
+    cache:
+      cache_paths:
+        - $HOME/.npm
+        - $HOME/Library/Caches/CocoaPods
+    scripts:
+      - name: Install dependencies
+        script: |
+          npm install
+      - name: Install CocoaPods dependencies
+        script: |
+          cd ios && pod install
+      - name: Build iOS app
+        script: |
+          cd ios
+          xcodebuild \
+            -workspace SmartRingHealth.xcworkspace \
+            -scheme SmartRingHealth \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath build/SmartRingHealth.xcarchive \
+            clean archive
+      - name: Export IPA
+        script: |
+          cd ios
+          xcodebuild \
+            -exportArchive \
+            -archivePath build/SmartRingHealth.xcarchive \
+            -exportPath build \
+            -exportOptionsPlist ExportOptions.plist
+    artifacts:
+      - ios/build/SmartRingHealth.ipa
+      - ios/build/SmartRingHealth.xcarchive
+    publishing:
+      email:
+        recipients:
+          - user@example.com
+      app_store_connect:
+        auth: api_key
+        key_id: $APP_STORE_CONNECT_KEY_ID
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        key_content: $APP_STORE_CONNECT_PRIVATE_KEY
