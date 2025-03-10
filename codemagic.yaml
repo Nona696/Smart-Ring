@@ -46,12 +46,7 @@ workflows:
       - ios/build/SmartRingHealth.ipa
       - ios/build/SmartRingHealth.xcarchive
     integrations:
-      app_store_connect:
-        name: "App Store Connect Integration"
-        filePath: "/Users/builder/credentials/app-store-connect-private-key.p8"
-        type: "app_store_connect"
-        group: "default"
-        source: "environment"
+      app_store_connect: "default"
     publishing:
       email:
         recipients:
