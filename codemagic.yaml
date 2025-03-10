@@ -45,6 +45,9 @@ workflows:
     artifacts:
       - ios/build/SmartRingHealth.ipa
       - ios/build/SmartRingHealth.xcarchive
+    integrations:
+      app_store_connect:
+        auth: integration
     publishing:
       email:
         recipients:
