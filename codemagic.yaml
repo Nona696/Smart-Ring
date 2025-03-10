@@ -1,4 +1,3 @@
-
 workflows:
   react-native-ios:
     name: Smart Ring Health iOS
