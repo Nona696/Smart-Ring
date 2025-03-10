@@ -50,7 +50,4 @@ workflows:
         recipients:
           - user@example.com
       app_store_connect:
-        auth: api_key
-        key_id: $APP_STORE_CONNECT_KEY_ID
-        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
-        key_content: $APP_STORE_CONNECT_PRIVATE_KEY
+        auth: integration
